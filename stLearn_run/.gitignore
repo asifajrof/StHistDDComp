@@ -1,0 +1,10 @@
+# git repo folder
+stLearn/
+
+# drafts
+drafts/
+results/
+
+# others
+.vscode/
+.idea/
