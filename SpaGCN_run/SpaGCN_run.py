@@ -17,7 +17,7 @@ if len(sys.argv) < 2:
 elif len(sys.argv) == 2 or len(sys.argv) == 3:
     config_file_path = sys.argv[1]
 else:
-    print("Usage: python stlearn-run.py [config_file_path] [seed]")
+    print("Usage: python SpaGCN_run.py [config_file_path] [seed]")
     exit(0)
 
 with open(config_file_path, mode="r", encoding="utf-8") as config_file:
@@ -33,7 +33,8 @@ for sample_name in sample_names:
     print(f"Processing {sample_name}")
     # Read original 10x_h5 data and save it to h5ad
     if config["use_diffusion"]:
-        adata = sc.read(f"{data_path}/{sample_name}/filtered_feature_bc_matrix.h5")
+        adata = sc.read(
+            f"{data_path}/{sample_name}/filtered_feature_bc_matrix.h5")
     else:
         adata = read_10x_h5(
             f"{data_path}/{sample_name}/filtered_feature_bc_matrix.h5")
@@ -61,7 +62,8 @@ for sample_name in sample_names:
 
     if config["use_hist"]:
         # Read in hitology image
-        img = cv2.imread(f"{data_path}/{sample_name}/{sample_name}_full_image.tif")
+        img = cv2.imread(
+            f"{data_path}/{sample_name}/{sample_name}_full_image.tif")
 
         # Test coordinates on the image
         img_new = img.copy()
@@ -142,7 +144,8 @@ for sample_name in sample_names:
     # Save results
     os.makedirs(f"{result_path}/{sample_name}", exist_ok=True)
     labels_df = adata.obs[["pred", "refined_pred"]]
-    labels_df.rename(columns={"pred": "label", "refined_pred": "refined_label"}, inplace=True)
+    labels_df.rename(
+        columns={"pred": "label", "refined_pred": "refined_label"}, inplace=True)
     labels_df.to_csv(f"{result_path}/{sample_name}/labels.csv", index=True)
 
     print("Done!")

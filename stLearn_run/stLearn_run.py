@@ -12,7 +12,7 @@ if len(sys.argv) < 2:
 elif len(sys.argv) == 2 or len(sys.argv) == 3:
     config_file_path = sys.argv[1]
 else:
-    print("Usage: python stlearn-run.py [config_file_path] [seed]")
+    print("Usage: python stLearn_run.py [config_file_path] [seed]")
     exit(0)
 
 with open(config_file_path, mode="r", encoding="utf-8") as config_file:
@@ -26,12 +26,12 @@ BASE_PATH = Path(f"{data_path}")
 sample_names = config["sample_names"]
 for sample in sample_names:
     print(f"Processing {sample} ...")
-    
+
     TILE_PATH = Path(f"{result_path}/tmp/{sample}_tiles")
     TILE_PATH.mkdir(parents=True, exist_ok=True)
 
     data = st.Read10X(BASE_PATH / sample, library_id="diffusion" if config["use_diffusion"] else None,
-                        simulated=config["use_diffusion"])
+                      simulated=config["use_diffusion"])
 
     n_cluster = config["n_clusters"][f"{sample}"]
 
