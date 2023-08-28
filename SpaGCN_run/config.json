@@ -31,7 +31,6 @@
     "151675": 7,
     "151676": 7
   },
-  "run_path": ".",
   "result_path": "./results",
   "use_hist": true,
   "seed": 100,
