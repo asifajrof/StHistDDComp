@@ -1,0 +1,56 @@
+{
+  "data_path": "../datasets/DLPFC",
+  "use_diffusion": false,
+  "diffusion_phi": 0.1,
+  "diffusion_data_root": "../datasets/DLPFC/Diffusion",
+  "sample_names": [
+    "151507",
+    "151508",
+    "151509",
+    "151510",
+    "151669",
+    "151670",
+    "151671",
+    "151672",
+    "151673",
+    "151674",
+    "151675",
+    "151676"
+  ],
+  "n_clusters": {
+    "151507": 7,
+    "151508": 7,
+    "151509": 7,
+    "151510": 7,
+    "151669": 5,
+    "151670": 5,
+    "151671": 5,
+    "151672": 5,
+    "151673": 7,
+    "151674": 7,
+    "151675": 7,
+    "151676": 7
+  },
+  "result_path": "./results",
+  "use_hist": true,
+  "pca_n_comps": 100,
+  "distType": "KDTree",
+  "pre_epochs": 1000,
+  "adjacent_weight": 0.3,
+  "platform": "Visium",
+  "k": 12,
+  "weights": "weights_matrix_all",
+  "Conv_type": "GCNConv",
+  "pretrain": false,
+  "dim_reduction": true,
+  "priori": true,
+  "linear_encoder_hidden": [
+    64,
+    16
+  ],
+  "conv_hidden": [
+    64,
+    16
+  ],
+  "seed": 100
+}

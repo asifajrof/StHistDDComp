@@ -1,0 +1,12 @@
+# git repo folder
+DeepST/
+
+# drafts
+drafts/
+results/
+__pycache__/
+
+# others
+.vscode/
+.idea/
+MAE_model/
