@@ -1,0 +1,15 @@
+# git repo folder
+conST/
+
+# drafts
+drafts/
+results/
+input/
+__pycache__/
+MAE_model/
+pretrained/
+
+# others
+.vscode/
+.idea/
+MAE_model/
