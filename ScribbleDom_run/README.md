@@ -3,16 +3,15 @@
 ## Setup
 
 ```bash
-conda create -n SpaGCN_run python=3.10
-conda activate SpaGCN_run
-bash setup_SpaGCN_run.sh
+git clone https://github.com/1alnoman/ScribbleDom.git
+cd ScribbleDom
+conda env create -f environment.yml
+cd ..
 ```
 
 ## Run
 
-- modify the `config.json` file as per your need
-
 ```bash
-conda activate SpaGCN_run
-python SpaGCN_run.py
+conda activate scribble_dom
+python run_20.py
 ```
