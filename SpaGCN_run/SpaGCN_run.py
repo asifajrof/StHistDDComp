@@ -26,7 +26,7 @@ if len(sys.argv) == 3:
     config["seed"] = int(sys.argv[2])
 data_path = config["data_path"]
 config["result_path"] = f"{config['result_path']}/w_hist" if config["use_hist"] else f"{config['result_path']}/wo_hist"
-result_path = f"{config['result_path']}/seed_{config['seed']}"
+result_path = f"{config['result_path']}/results_seed_{config['seed']}"
 sample_names = config["sample_names"]
 
 for sample_name in sample_names:

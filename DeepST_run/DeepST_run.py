@@ -1,11 +1,12 @@
+# fmt: off
 import sys
 sys.path.append("DeepST/deepst")
-
-import subprocess
-import json
-from DeepST import run
-import gc
+# fmt: on
 import os
+import gc
+from DeepST import run
+import json
+import subprocess
 
 # from DeepST.deepst.DeepST import run
 # from pathlib import Path
@@ -44,7 +45,9 @@ save_path = os.path.abspath(config["result_path"])
 
 seed = config["seed"]
 
-save_path = os.path.join(save_path, f"seed_{seed}")
+save_path = os.path.join(
+    save_path, "w_hist" if config["use_hist"] else "wo_hist")
+save_path = os.path.join(save_path, f"results_seed_{seed}")
 
 for data_name in data_names:
     print(f"processing {data_name} ...")

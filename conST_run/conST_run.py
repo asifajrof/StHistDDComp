@@ -1,6 +1,7 @@
+# fmt: off
 import sys
 sys.path.append("conST")
-
+# fmt: on
 import subprocess
 import MAE_run
 import json
@@ -74,7 +75,7 @@ if len(sys.argv) == 3:
     config["seed"] = sys.argv[2]
 
 config["result_path"] = f"{config['result_path']}/w_hist" if config["use_hist"] else f"{config['result_path']}/wo_hist"
-config["result_path"] = f"{config['result_path']}/seed_{config['seed']}"
+config["result_path"] = f"{config['result_path']}/results_seed_{config['seed']}"
 
 # ______________ params ______________
 parser = argparse.ArgumentParser()

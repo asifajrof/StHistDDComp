@@ -19,7 +19,9 @@ with open(config_file_path, mode="r", encoding="utf-8") as config_file:
     config = json.load(config_file)
 if len(sys.argv) == 3:
     config["seed"] = int(sys.argv[2])
-config["result_path"] = f"{config['result_path']}/seed_{config['seed']}"
+
+config["result_path"] = f"{config['result_path']}/w_hist" if config["use_hist"] else f"{config['result_path']}/wo_hist"
+config["result_path"] = f"{config['result_path']}/results_seed_{config['seed']}"
 data_path = config["data_path"]
 result_path = config["result_path"]
 BASE_PATH = Path(f"{data_path}")
@@ -68,10 +70,10 @@ for sample in sample_names:
     os.makedirs(f"{result_path}/{sample}", exist_ok=True)
 
     labels_df = data.obs["X_pca_kmeans"].rename("label")
-    labels_df.to_csv(f"{result_path}/{sample}/result.csv")
+    labels_df.to_csv(f"{result_path}/{sample}/labels.csv")
     # delete tile folder
     os.system(f"rm -rf {TILE_PATH}")
-    print(f"saved to {result_path}/{sample}/result.csv")
+    print(f"saved to {result_path}/{sample}/labels.csv")
 
     # clear memory
     del data
