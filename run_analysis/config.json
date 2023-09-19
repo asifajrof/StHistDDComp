@@ -1,0 +1,35 @@
+{
+    "annotations_base_path": "annotations/BCDC_annotations",
+    "label_base_path": "results/stLearn_BCDC_results",
+    "label_sub_dirs": [
+        "w_hist"
+    ],
+    "seeds": [
+        601,
+        143,
+        845,
+        630,
+        459,
+        123,
+        201,
+        221,
+        58,
+        157,
+        414,
+        42,
+        991,
+        676,
+        115,
+        826,
+        399,
+        79,
+        150,
+        711
+    ],
+    "data_samples": [
+        "Visium_FFPE_Human_Breast_Cancer"
+    ],
+    "ari_save_base_path": "results/stLearn_BCDC_ari",
+    "ari_type": "pred_ari",
+    "plot_base_path": "results/stLearn_BCDC_plots"
+}
