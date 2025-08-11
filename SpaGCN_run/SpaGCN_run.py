@@ -36,7 +36,7 @@ for sample_name in sample_names:
         adata = sc.read(
             f"{data_path}/{sample_name}/filtered_feature_bc_matrix.h5")
     else:
-        adata = read_10x_h5(
+        adata = sc.read_h5ad(
             f"{data_path}/{sample_name}/filtered_feature_bc_matrix.h5")
     spatial = pd.read_csv(f"{data_path}/{sample_name}/spatial/tissue_positions_list.csv",
                           sep=",", header=None, na_filter=False, index_col=0)
@@ -63,7 +63,7 @@ for sample_name in sample_names:
     if config["use_hist"]:
         # Read in hitology image
         img = cv2.imread(
-            f"{data_path}/{sample_name}/{sample_name}_full_image.tif")
+            f"{data_path}/{sample_name}/alligned_ST_mel1_rep2_HE.jpg")
 
         # Test coordinates on the image
         img_new = img.copy()
@@ -138,7 +138,7 @@ for sample_name in sample_names:
     # shape="hexagon" for Visium data, "square" for ST data.
     adj_2d = spg.calculate_adj_matrix(x=x_array, y=y_array, histology=False)
     refined_pred = spg.refine(sample_id=adata.obs.index.tolist(
-    ), pred=adata.obs["pred"].tolist(), dis=adj_2d, shape="hexagon")
+    ), pred=adata.obs["pred"].tolist(), dis=adj_2d, shape="square")
     adata.obs["refined_pred"] = refined_pred
     adata.obs["refined_pred"] = adata.obs["refined_pred"].astype("category")
     # Save results

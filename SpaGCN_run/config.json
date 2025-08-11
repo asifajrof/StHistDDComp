@@ -1,35 +1,13 @@
 {
-  "data_path": "../datasets/DLPFC",
+  "data_path": "/content/Melanoma-Cancer",
   "use_diffusion": false,
-  "diffusion_phi": 0.1,
-  "diffusion_data_root": "../datasets/DLPFC/Diffusion",
+  "diffusion_phi": 0,
+  "diffusion_data_root": "",
   "sample_names": [
-    "151507",
-    "151508",
-    "151509",
-    "151510",
-    "151669",
-    "151670",
-    "151671",
-    "151672",
-    "151673",
-    "151674",
-    "151675",
-    "151676"
+    "melanoma-cancer"
   ],
   "n_clusters": {
-    "151507": 7,
-    "151508": 7,
-    "151509": 7,
-    "151510": 7,
-    "151669": 5,
-    "151670": 5,
-    "151671": 5,
-    "151672": 5,
-    "151673": 7,
-    "151674": 7,
-    "151675": 7,
-    "151676": 7
+    "melanoma-cancer": 5
   },
   "result_path": "./results",
   "use_hist": true,
