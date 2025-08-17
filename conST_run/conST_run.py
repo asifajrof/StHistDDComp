@@ -86,7 +86,7 @@ parser.add_argument("--knn_distanceType", type=str, default="euclidean",
 parser.add_argument("--epochs", type=int, default=200,
                     help="Number of epochs to train.")
 parser.add_argument("--cell_feat_dim", type=int,
-                    default=300, help="Dim of PCA")
+                    default=290, help="Dim of PCA")
 parser.add_argument("--morph_feat_dim", type=int, default=768,
                     help="Dim of Morphological feat for PCA")
 parser.add_argument("--feat_hidden1", type=int, default=100,
