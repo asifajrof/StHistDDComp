@@ -290,7 +290,7 @@ for sample_name in config["sample_names"]:
     dis = graph_dict["adj_norm"].to_dense().numpy(
     ) + np.eye(graph_dict["adj_norm"].shape[0])
     refine_cluster = refine(sample_id=index,
-                            pred=adata_conST.obs["leiden"].tolist(), dis=dis)
+                            pred=adata_conST.obs["leiden"].tolist(), dis=dis, shape="square")
     adata_conST.obs["refine"] = refine_cluster
 
     # ______________ Save Results ______________
