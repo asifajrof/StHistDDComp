@@ -56,8 +56,8 @@ for sample_name in sample_names:
     adata.obs["x1"] = spatial[1]
     adata.obs["x2"] = spatial[2]
     adata.obs["x3"] = spatial[3]
-    adata.obs["x4"] = spatial[4] * scale_f
-    adata.obs["x5"] = spatial[5] * scale_f
+    adata.obs["x4"] = (spatial[4] * scale_f).round().astype(int)
+    adata.obs["x5"] = (spatial[5] * scale_f).round().astype(int)
     adata.obs["x_array"] = adata.obs["x2"]
     adata.obs["y_array"] = adata.obs["x3"]
     adata.obs["x_pixel"] = adata.obs["x4"]
