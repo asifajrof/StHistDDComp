@@ -38,13 +38,26 @@ for sample_name in sample_names:
     else:
         adata = sc.read_h5ad(
             f"{data_path}/{sample_name}/filtered_feature_bc_matrix.h5")
+    scale_factors = {}
+    with open(f"{data_path}/{sample_name}/spatial/scalefactors_json.json", "r", encoding="utf-8") as f:
+        scale_factors = json.load(f)
+    if config["resolution"] == "fulres":
+        scale_f = 1
+        image_path = f"{data_path}/{sample_name}/{sample_name}_full_iamge.tif"
+    elif config["resolution"] == "hires":
+        scale_f = scale_factors["tissue_hires_scalef"]
+        image_path = f"{data_path}/{sample_name}/spatial/tissue_hires_image.png"
+    elif config["resolution"] == "hires":
+        scale_f = scale_factors["tissue_lowres_scalef"]
+        image_path = f"{data_path}/{sample_name}/spatial/tissue_lowres_image.png"
+
     spatial = pd.read_csv(f"{data_path}/{sample_name}/spatial/tissue_positions_list.csv",
                           sep=",", header=None, na_filter=False, index_col=0)
     adata.obs["x1"] = spatial[1]
     adata.obs["x2"] = spatial[2]
     adata.obs["x3"] = spatial[3]
-    adata.obs["x4"] = spatial[4]
-    adata.obs["x5"] = spatial[5]
+    adata.obs["x4"] = spatial[4] * scale_f
+    adata.obs["x5"] = spatial[5] * scale_f
     adata.obs["x_array"] = adata.obs["x2"]
     adata.obs["y_array"] = adata.obs["x3"]
     adata.obs["x_pixel"] = adata.obs["x4"]
@@ -62,8 +75,7 @@ for sample_name in sample_names:
 
     if config["use_hist"]:
         # Read in hitology image
-        img = cv2.imread(
-            f"{data_path}/{sample_name}/alligned_ST_mel1_rep2_HE.jpg")
+        img = cv2.imread(image_path)
 
         # Test coordinates on the image
         img_new = img.copy()

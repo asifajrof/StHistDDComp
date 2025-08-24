@@ -11,6 +11,7 @@
   },
   "result_path": "./results",
   "use_hist": true,
+  "resolution": "fulres",
   "seed": 100,
   "s": 1,
   "b": 49,
