@@ -43,7 +43,7 @@ for sample_name in sample_names:
         scale_factors = json.load(f)
     if config["resolution"] == "fulres":
         scale_f = 1
-        image_path = f"{data_path}/{sample_name}/{sample_name}_full_iamge.tif"
+        image_path = f"{data_path}/{sample_name}/{sample_name}_full_image.tif"
     elif config["resolution"] == "hires":
         scale_f = scale_factors["tissue_hires_scalef"]
         image_path = f"{data_path}/{sample_name}/spatial/tissue_hires_image.png"
