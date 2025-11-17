@@ -86,7 +86,7 @@ parser.add_argument("--knn_distanceType", type=str, default="euclidean",
 parser.add_argument("--epochs", type=int, default=200,
                     help="Number of epochs to train.")
 parser.add_argument("--cell_feat_dim", type=int,
-                    default=300, help="Dim of PCA")
+                    default=290, help="Dim of PCA")
 parser.add_argument("--morph_feat_dim", type=int, default=768,
                     help="Dim of Morphological feat for PCA")
 parser.add_argument("--feat_hidden1", type=int, default=100,
@@ -290,7 +290,7 @@ for sample_name in config["sample_names"]:
     dis = graph_dict["adj_norm"].to_dense().numpy(
     ) + np.eye(graph_dict["adj_norm"].shape[0])
     refine_cluster = refine(sample_id=index,
-                            pred=adata_conST.obs["leiden"].tolist(), dis=dis)
+                            pred=adata_conST.obs["leiden"].tolist(), dis=dis, shape="square")
     adata_conST.obs["refine"] = refine_cluster
 
     # ______________ Save Results ______________

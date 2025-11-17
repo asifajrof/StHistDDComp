@@ -3,9 +3,78 @@ import gc
 import json
 import sys
 import os
+import scanpy as sc
+import pandas as pd
 import stlearn as st
+import matplotlib.pyplot as plt
+from anndata import AnnData
 from pathlib import Path
+from typing import Union
 st.settings.set_figure_params(dpi=180)
+
+def ReadStVisium(
+    data_path: str,
+    count_file: str = "filtered_feature_bc_matrix.h5",
+    image_file: Union[str, Path] = None,
+    library_id: str = "STVisium",
+    quality: str = "fulres",
+    spot_diameter_fullres: float = 100,
+) -> AnnData:
+    count_path = os.path.join(data_path, count_file)
+    adata = sc.read(count_path)
+
+    tissue_file = os.path.join(data_path, "spatial", "tissue_positions_list.csv")
+    tissue_pos = pd.read_csv(tissue_file, header=None)
+    tissue_pos.columns = ["barcode", "tissue", "row", "col", "imagecol", "imagerow"]
+
+    adata.obsm["spatial"] = tissue_pos[["imagerow", "imagecol"]].to_numpy()
+
+    scale_file = os.path.join(data_path, "spatial", "scalefactors_json.json")
+    with open(scale_file) as json_file:
+        scale_factors = json.load(json_file)
+
+    if quality != "fulres":
+        tissue_pos["imagerow"] = (
+            tissue_pos["imagerow"] * scale_factors[f"tissue_{quality}_scalef"]
+        )
+        tissue_pos["imagecol"] = (
+            tissue_pos["imagecol"] * scale_factors[f"tissue_{quality}_scalef"]
+        )
+
+    adata.obs["barcode"] = adata.obs_names
+    adata.obs = adata.obs.merge(
+        tissue_pos, left_on="barcode", right_on="barcode", how="left"
+    )
+    adata.obs_names = adata.obs["barcode"]
+    adata.obs.drop(columns=["barcode"], inplace=True)
+
+    if library_id is None:
+        library_id = list(adata.uns["spatial"].keys())[0]
+
+    adata.uns["spatial"] = {}
+    adata.uns["spatial"][library_id] = {}
+    adata.uns["spatial"][library_id]["images"] = {}
+    image_coor = adata.obs[["imagerow", "imagecol"]].values
+    if quality == "fulres":
+        # glob on a path string
+        data_path_obj = Path(data_path)
+        image_candidates = list(data_path_obj.glob("*.tif"))
+        img_path = image_candidates[0]
+    elif quality in ["hires", "lowres"]:
+        img_path = os.path.join(data_path, "spatial", f"tissue_{quality}_image.png")
+    img = plt.imread(img_path, 0)
+
+    adata.uns["spatial"][library_id]["images"][quality] = img
+    adata.uns["spatial"][library_id]["use_quality"] = quality
+    adata.uns["spatial"][library_id]["scalefactors"] = {}
+    adata.uns["spatial"][library_id]["scalefactors"][
+        "tissue_" + quality + "_scalef"
+    ] = scale_factors[f"tissue_{quality}_scalef"]
+    adata.uns["spatial"][library_id]["scalefactors"][
+        "spot_diameter_fullres"
+    ] = spot_diameter_fullres
+
+    return adata
 
 if len(sys.argv) < 2:
     config_file_path = "config.json"
@@ -32,8 +101,9 @@ for sample in sample_names:
     TILE_PATH = Path(f"{result_path}/tmp/{sample}_tiles")
     TILE_PATH.mkdir(parents=True, exist_ok=True)
 
-    data = st.Read10X(BASE_PATH / sample, library_id="diffusion" if config["use_diffusion"] else None,
-                      simulated=config["use_diffusion"])
+    # data = st.Read10X(BASE_PATH / sample, library_id="diffusion" if config["use_diffusion"] else None,
+                    #   simulated=config["use_diffusion"])
+    data = ReadStVisium(BASE_PATH / sample, quality="hires")
 
     n_cluster = config["n_clusters"][f"{sample}"]
 
