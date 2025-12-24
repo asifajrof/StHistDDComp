@@ -1,0 +1,35 @@
+{
+    "annotations_base_path": "data/manual_annotations",
+    "coordinates_base_path": "data/coordinates",
+    "pcs_base_path": "data/pcs",
+    "label_base_path": "data/labels",
+    "model_name": "DeepST",
+    "sub_paths": ["w_hist"],
+    "seed_prefix": "results_seed_",
+    "label_file_suffix": "labels",
+    "seeds": [
+        601,
+        143,
+        845,
+        630,
+        459,
+        123,
+        201,
+        221,
+        58,
+        157,
+        414,
+        42,
+        991,
+        676,
+        115,
+        826,
+        399,
+        79,
+        150,
+        711
+    ],
+    "data_samples":  [
+        "151507","151508","151509","151510","151669","151670","151671","151672","151673","151674","151675","151676","hbc","bcdc","melanoma"
+    ]
+}

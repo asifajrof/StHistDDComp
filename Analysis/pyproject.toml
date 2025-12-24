@@ -1,0 +1,21 @@
+[project]
+name = "histnohist"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "noman@vt.edu"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "gdown (>=5.2.0,<6.0.0)",
+    "googledriver (>=0.1.7,<0.2.0)",
+    "pydantic (>=2.12.4,<3.0.0)",
+    "pandas (>=2.3.3,<3.0.0)",
+    "scikit-learn (>=1.7.2,<2.0.0)",
+    "statsmodels (>=0.14.6,<0.15.0)"
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
