@@ -283,3 +283,12 @@ python DeepST_run.py config.json 123
 The framework also provides `run_20.py` scripts to batch-run experiments across 20 predefined seeds for robust comparison.
 
 ---
+
+
+# Analysis
+
+For analysis from follow the guideline in Analysis/README.md. It will download the data from: (https://drive.google.com/drive/folders/1Dj2f8JlJGBpOxx1yEfNs0WWzrBq3hRKN?usp=sharing) and execute all the analysis if you don't have any /Analysis/data/ folder. If you want to run analysis on your own data, keep your data in, Analysis/Data folder.
+
+For getting the data accross all the method download the data from: https://drive.google.com/drive/folders/1Dj2f8JlJGBpOxx1yEfNs0WWzrBq3hRKN?usp=sharing
+
+For getting the reproducible result downlonload the results from: https://drive.google.com/drive/folders/1bP-MZtCpAIwonRhDFwiFBbkTxIZgemGY?usp=sharing
