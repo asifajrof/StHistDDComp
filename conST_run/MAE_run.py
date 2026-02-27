@@ -12,6 +12,7 @@ from tqdm import tqdm
 import os
 import subprocess
 
+Image.MAX_IMAGE_PIXELS = None  # disables the check entirely
 
 def Read10X(
     path: Union[str, Path],
@@ -75,7 +76,7 @@ def Read10X(
     """
 
     path = Path(path)
-    adata = scanpy.read_10x_h5(path / count_file, genome=genome)
+    adata = scanpy.read(path / count_file)
 
     adata.uns["spatial"] = dict()
 
@@ -144,19 +145,12 @@ def Read10X(
             "pxl_col_in_fullres",
             "pxl_row_in_fullres",
         ]
-        positions.index = positions["barcode"]
-
-        adata.obs = adata.obs.join(positions, how="left")
-
-        adata.obsm["spatial"] = (
-            adata.obs[["pxl_row_in_fullres", "pxl_col_in_fullres"]]
-            .to_numpy()
-            .astype(int)
+        adata.obs["barcode"] = adata.obs_names
+        adata.obs = adata.obs.merge(
+            positions, left_on="barcode", right_on="barcode", how="left"
         )
-        adata.obs.drop(
-            columns=["barcode", "pxl_row_in_fullres", "pxl_col_in_fullres"],
-            inplace=True,
-        )
+        adata.obsm['spatial'] = adata.obs[['pxl_row_in_fullres', 'pxl_col_in_fullres']].to_numpy().astype(int)
+        adata.obs.drop(columns=['barcode', 'pxl_row_in_fullres', 'pxl_col_in_fullres'], inplace=True)
 
         # put image path in uns
         if image_path is not None:
@@ -281,7 +275,7 @@ def tiling(
 def main(data_path, image_path, output_folder, mae_folder, model_path):
     # read full adata
     full_adata = Read10X(f'{data_path}', load_images=True,
-                         quality="fulres", image_path=f'{image_path}')
+                         quality="fulres", image_path=f'{image_path}', library_id="melanoma-cancer")
 
     # read image
     pil_img = Image.open(f'{image_path}')

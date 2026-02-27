@@ -1,4 +1,3 @@
-import sys
 import subprocess
 
 seeds = [
@@ -24,9 +23,7 @@ seeds = [
     711
 ]
 
-dataset = sys.argv[1]
-
 for seed in seeds:
     print(f"seed: {seed}")
     subprocess.run(
-        f"python SpaGCN_run.py drafts/config_{dataset}.json {seed}", shell=True)
+        f"python SpaGCN_run.py config.json {seed}", shell=True)
